@@ -9,3 +9,5 @@ Application.h, Data.c, Data.h, and Test.c files from the
 particular application directory, and all other files from the
 root directory to a common directory, then compile them 
 together.
+
+See the file BUGS for a list of bugs.
