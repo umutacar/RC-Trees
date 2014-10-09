@@ -1,0 +1,14 @@
+Application:
+	Determine the closest mark node to the node v.
+
+Support Tree structure:
+
+ Each cluster contains:
+	length across:
+	Closest mark node to each endpoint.
+
+Query:
+
+ Start at v, and proceed up the support tree, keeping track of what is the 
+closest marked node to v, and the distance from v to each endpoint in the 
+current cluster. Let cl be the current cluster, dl, and dr the distances to the left and right endpoints respectively in the subcluster, and curdist the current closest distance to a marked node in the subcluster. Then to recalculate curdist, take the distance from v to the common endpoint, and add it to the distance to the closest marked node on each of the other subclusters, and compare it to curdist. For the distances dr and dl, just assigning one endpoint as left the other as right, the two cases then are if the subcluster is binary, then one of the endpoints has the correct distance, otherwise none do, then just add the distance accross the binary cluster that leads to the endpoint to the current distance.

@@ -1,0 +1,14 @@
+ To support path queries, we will annotate each binary
+cluster in the RC-Tree with the weight of the maximum edge on the
+path between its two boundary vertices; for future reference call this
+path the {\em cluster path}.  All other cluster (unary and nullary) will
+have no tags.  This requires that the user specify \rakeData, and
+\finalizeData to be ``no-ops'', and define \compressData to be the maximum
+operation on edge weights.  By using the annotations, the user then writes
+a function that finds the maximum edge weight on a given path as follows.
+Let $u$ and $v$ be the two ends of the path.  Starting at $u$ and $v$ in
+the RC-Tree and walk up the RC-Trees while maintaining the weight of the
+heaviest edge on the path from $u$ and $v$ to the endpoints of the
+clusters that they are included.  When the two clusters meet, the maximum
+of the two weights corresponding to the common end-point will yield the
+result.

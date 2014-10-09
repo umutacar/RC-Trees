@@ -1,0 +1,7 @@
+Consider a tree $T$ with non-negative edge weights. Let $d_T(v)$ be
+the maximum distance from vertex $v$ to any other vertex in tree $T$.
+A median of $T$ is is a vertex $c$ minimizing $\sum_{v\in V} weight(v) *$d(c,v)$.  We tag each cluster $C$ with the internal weight for that cluster.  To
+locate a median, we start at the root and take a path to the median
+based on the following observation.  Consider two clusters $C_1$ and
+$C_2$ with a common boundary vertex $v$.  Assume without loss of
+generality that $Totalweight(C_1) \ge Totalweight(C_2)$. If $m$ is the median of $C_1 \cup C_2$, then $m \in C_1$, because if (u,v) is an edge on $C_1 \cup C_2$, and the subcluster to each side of the edge have weight $w_1 \ge w_2$, then all $m$ must be on the side with weight $w_1$ since all vertices on the opposite end would have to increase the sum by $w(u,v) * (w_1 - w_2)$ at least (the diffence caused by crossing the edge).

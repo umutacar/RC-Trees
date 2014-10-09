@@ -1,0 +1,17 @@
+Given a root $r$ and two vertices $v_1$ and $v_2$, we can find the
+least common ancestor of $v_1$ and $v_2$ with respect to the root $r$
+by walking the tree up from all tree vertices simultaneously until
+they all meet and then walking down two of the paths to find the least
+common ancestor.  Consider the cluster $c$ that all three paths meet.
+If this is the first cluster that any two clusters meet, then the
+corresponding vertex is the least common ancestor.  Otherwise, one of
+the children of $c$ contains two clusters, move down to that cluster.
+Now follow the path down until the two paths split.  If it is a binary
+cluster, proceed to the cluster pointing in the direction of the the
+vertex whose path has joined last.  Now follow the path down to the
+first unary cluster, the corresponding vertex is the least common
+ancestor.  If the paths split at a unary cluster, and both path
+continue to unary clusters, the corresponding vertex is the least
+common ancestor.  Otherwise, continue to the binary cluster and follow
+the path down to the first unary cluster, whose corresponding vertex
+is the least common ancestor. 

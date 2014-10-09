@@ -1,0 +1,7 @@
+The diameter of a tree is defined as the length of the longest path in the
+tree.  To compute the diameter, we tag each cluster with its diameter and
+the length of the longest path starting at each boundary vertex.  We also
+tag each binary cluster with the length of its cluster path.  The root
+will be tagged with diameter of the whole tree.  It is straightforward to
+define the rake, compress, and finalize operations for this purpose. 
+

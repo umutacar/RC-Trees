@@ -1,0 +1,15 @@
+
+Definition, and application:
+
+Consider a tree $T$ with non-negative edge weights. Let $d_T(v)$ be
+the maximum distance from vertex $v$ to any other vertex in tree $T$.
+A center of $T$ is is a vertex $c$ minimizing $d_T(c)$.  We tag each
+cluster $C$ with $d_C(v)$ for each boundary vertex $v$ $\in$ $C$ and
+tag each binary cluster with the length of its cluster path.  To
+locate a center, we start at the root and take a path to the center
+based on the following observation.  Consider two clusters $C_1$ and
+$C_2$ with a common boundary vertex $v$.  Assume without loss of
+generality that $d_{C_1}(v) \ge d_{C_2}(v)$ and let $u$ be a vertex of
+$C_1$ farthest from $v$.  Then a center of $C_1
+\cup C_2$ is in $C_1$ because $v$ is closer $u$ than any other vertex
+in $C_2$.

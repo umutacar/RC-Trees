@@ -1,0 +1,264 @@
+////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2004
+// Carnegie Mellon University:
+// Guy Blelloch, Umut Acar, Jorge Vittes
+//
+// All Rights Reserved.
+//
+// Permission to use, copy, modify and distribute this software and its
+// documentation is hereby granted, provided that both the copyright
+// notice and this permission notice appear in all copies of the
+// software, derivative works or modified versions, and any portions
+// thereof.
+//
+// CARNEGIE MELLON ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS"
+// CONDITION.  CARNEGIE MELLON AND THE SCAL PROJECT DISCLAIMS ANY
+// LIABILITY OF ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM
+// THE USE OF THIS SOFTWARE.
+//
+// The ALADDIN requests users of this software to return to
+//
+//  Guy Blelloch                         blelloch@cs.cmu.edu
+//  School of Computer Science
+//  Carnegie Mellon University
+//  5000 Forbes Ave.
+//  Pittsburgh PA 15213-3890
+//
+// any improvements or extensions that they make and grant Carnegie Mellon
+// the rights to redistribute these changes.
+///////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Data.c
+//
+// Jorge L. Vittes
+//
+// This code is for finding the center of a connected component
+// Algorithm by Guy Blelloch, and Jorge Vittes
+///////////////////////////////////////////////////////////////////////////
+#include <stdio.h>
+#include <math.h>
+#include <malloc.h>
+#include "Data.h"
+#include "AMath.h"
+
+
+///////////////////////////////////////////////////////////////////////////
+// Get the data that is associated with the vanishing endpoint
+///////////////////////////////////////////////////////////////////////////
+double getThisData(bin_data* bd)
+{
+  if(GET_OFF(bd)) {
+    bin_data* bd2 = GET_DT(bd);
+    return bd2->mpath2;
+  }
+  //don't need to purify if it already is!
+  return bd->mpath1;
+}
+
+/////////////////////////////////////////////////////////////////////
+// Get the Data that is associated with the non-vanishing endpoint
+/////////////////////////////////////////////////////////////////////
+double getFarData(bin_data* bd)
+{
+  if(GET_OFF(bd)) {
+    bin_data* bd2 = GET_DT(bd);
+    return bd2->mpath1;
+  }
+  //don't need to purify if it already is!
+  return bd->mpath2;
+}
+
+///////////////////////////////////////////////////////////////////
+// Get the length of the cluster by purifying the pointer then
+// gettin the length
+///////////////////////////////////////////////////////////////////
+double getLen(bin_data* bd)
+{
+  bd = GET_DT(bd);
+  return bd->len;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+// constructor for bin_data unsing edge information u,v, are endpoints, 
+// w is a double.
+/////////////////////////////////////////////////////////////////////////////////
+bin_data::bin_data(int u, int v, double w)
+{
+  len = w;
+  mpath1 = w;
+  mpath2 = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// default constructor for binary data
+/////////////////////////////////////////////////////////////////////////////////
+bin_data::bin_data()
+{
+  len = 0.0;
+  mpath1 = 0.0;
+  mpath2 = 0.0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Reset function for binary data
+/////////////////////////////////////////////////////////////////////////////////
+void bin_data::reset()
+{
+  len = 0.0;
+  mpath1 = 0.0;
+  mpath2 = 0.0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// constructor for unary data using vertex data to be extracted from a file
+/////////////////////////////////////////////////////////////////////////////////
+unary_data::unary_data(FILE* file)
+{
+  int val, mark;
+  fscanf(file,"%i %i",&val,&mark);
+  len = 0.0;
+  mpath = 0.0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Default constructor for unary data
+/////////////////////////////////////////////////////////////////////////////////
+unary_data::unary_data()
+{
+  len = 0.0;
+  mpath = 0.0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Reset function for unary data
+////////////////////////////////////////////////////////////////////////////////
+void unary_data::reset()
+{
+  len = 0.0;
+  mpath = 0.0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Default constructor for final data
+////////////////////////////////////////////////////////////////////////////////
+final_data::final_data()
+{
+  
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Reset function for final data
+/////////////////////////////////////////////////////////////////////////////////
+void final_data::reset()
+{
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Return true if final_data a, and final_data b are the same as far as the 
+// algorithm is concerned
+/////////////////////////////////////////////////////////////////////////////////
+int isEqual2(final_data a, final_data b)
+{
+  return 1;
+} 
+
+////////////////////////////////////////////////////////////////////////////////////
+// combine the two unary datas clA, and clB and place that into dest
+////////////////////////////////////////////////////////////////////////////////////
+void addData(unary_data* dA, unary_data* dB, unary_data* dst) 
+{
+  dst->len   = 0.0;
+  dst->mpath = dmax(dA->mpath,dB->mpath);
+}
+ 
+
+////////////////////////////////////////////////////////////////////////////////////
+// using the collected information for the unary clusters, and the data from the 
+// binary clusters combine it, and place it in dest for when a contract occured
+////////////////////////////////////////////////////////////////////////////////////
+void dataContract(bin_data* left,bin_data* right, unary_data* sumCl, bin_data* dest)
+{
+
+  double mpathr = getThisData(right);
+  double mpathl = getThisData(left);
+
+  double lenl = getLen(left);
+  double lenr = getLen(right);
+  
+  dest->len  = lenr + lenl;
+  dest->mpath2 = max3(sumCl->mpath + lenr, mpathl + lenr, mpathr);
+  dest->mpath1 = max3(sumCl->mpath + lenl, mpathr + lenl, mpathl);
+
+  deprintf("dest is %p\n",dest);
+  deprintf("len is %lf, lenr is %lf, lenl is %lf\n",dest->len,lenr,lenl);
+  
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// using the collected information fro the unary clusters, and the data from the
+// binary edge cluster combine it, and place it in dest for when a rake occurered
+////////////////////////////////////////////////////////////////////////////////////
+void rakeIn(bin_data* edgecl,unary_data* sumcl,unary_data* dest)
+{
+  double mpathf = getFarData(edgecl);
+  double len = getLen(edgecl);
+
+  dest->len = 0.0;
+  dest->mpath = dmax(mpathf,sumcl->mpath + len);
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+// copy the necessary data from unary data cl to the final destination dest
+///////////////////////////////////////////////////////////////////////////////////
+void finalizeData(unary_data* udata, final_data* fdata)
+{
+  
+}
+
+
+void pushDownData(bin_data* parent, bin_data* child)
+{
+}
+
+
+void updateDataWeight(bin_data* bd)
+{
+ double w = rand()%MILLION; 
+  bd->len = bd->mpath1 = bd->mpath2 = w;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// make the edge data given the edge information
+/////////////////////////////////////////////////////////////////////////////////
+bin_data makeEdgeData (int n1, int n2, int w) {
+  bin_data ret(n1,n2,(double) w);
+  
+  return ret;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Read the edge data given endpoints v1 and v2
+/////////////////////////////////////////////////////////////////////////////////
+bin_data readEdgeData (FILE* file,int v1, int v2)
+{
+  int w;
+  fscanf(file,"%i",&w);
+  return makeEdgeData (v1,v2,w);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Read vertex data from a file
+/////////////////////////////////////////////////////////////////////////////////
+unary_data readVertexData(FILE* file)
+{
+  unary_data res(file);
+  return res;
+}
+
+
+
+

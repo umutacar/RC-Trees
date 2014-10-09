@@ -1,0 +1,11 @@
+A subtree query asks for the heaviest in a subtree which is specified by
+providing two vertices $v$ and $r$; $r$ is the root of the tree and $v$ is
+root of the subtree.  To support subtree queries, we tag the cluster with
+the heaviest edge in that subtree.  It is easy to specify the rake,
+compress, and finalize operations for this purpose.  To find the heaviest
+edge in a given subtree, we start at $v$ and $r$ and walk up the RC-Tree
+until they meet.  For the tree-root $r$, we maintain no information, for
+the subtree-root $v$, we maintain the heaviest edge in the subtree rooted
+at $v$ with respect to each boundary vertex as the root.  When the two
+paths meet, we compute the answer by taking the maximum of cluster for $r$
+and the value for the common boundary vertex. 
