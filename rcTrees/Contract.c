@@ -205,11 +205,11 @@ void shortCut (node* thisNode,node* left,node* right,int lindex,int rindex, int 
   scar* lscar;
 
   //get the scar
-  lscar = (scar* ) ((int) (left->descendant) + (int) (thisNode->scars[lindex].backscar) - (int) left);
+  lscar = (scar* ) ((intptr_t) (left->descendant) + (intptr_t) (thisNode->scars[lindex].backscar) - (intptr_t) left);
 
   //update the backscar, and neighbor by making it point to the other neighbor
-  lscar->backscar = (scar *) ((int) right->descendant + (((int)(thisNode->scars[rindex].backscar)) - (int)right));
-  lscar->cl = (cluster*)((int) (thisNode->vertex->cl) + dir);
+  lscar->backscar = (scar *) ((intptr_t) right->descendant + (((intptr_t)(thisNode->scars[rindex].backscar)) - (intptr_t)right));
+  lscar->cl = (cluster*)((intptr_t) (thisNode->vertex->cl) + dir);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -246,10 +246,10 @@ void doRake(node* thisNode,node* left, int lindex)
   
   //set the neighbors scars correctly
 
-  lscar = (scar *)((int)(left->descendant) + (int)(thisNode->scars[lindex].backscar) -(int) left);
+  lscar = (scar *)((intptr_t)(left->descendant) + (intptr_t)(thisNode->scars[lindex].backscar) -(intptr_t) left);
   lscar->cl = thisNode->vertex->cl;
   lscar->backscar = NULL;
-  drun(deprintf("the neighbor is %d\n",((cluster*)((int) lscar - ((int) (lscar) % sizeof(node))))->id  ));
+  drun(deprintf("the neighbor is %d\n",((cluster*)((intptr_t) lscar - ((intptr_t) (lscar) % sizeof(node))))->id  ));
 
   cl->affected = IS_AFFECTED;
   //cl->endpoints = 1;
@@ -293,7 +293,7 @@ void doLive(node* thisNode)
   node* desc;
   scar *neigh_scar, *desc_scar;
 
-  drun(int j);
+  drun(intptr_t j);
   drun(cluster* cl);
 
   neighs[0]=-1;neighs[1]=-1;
@@ -330,7 +330,7 @@ void doLive(node* thisNode)
   
     if (neigh_scar) { 
       neigh = GET_NEIGHBOR(neigh_scar);
-      desc_scar= (scar *) ((int)neigh->descendant+ (int) neigh_scar - (int)neigh);
+      desc_scar= (scar *) ((intptr_t)neigh->descendant+ (intptr_t) neigh_scar - (intptr_t)neigh);
 
       desc_scar->cl       = neigh_scar->cl;
       desc_scar->backscar = desc->scars+i;     
@@ -341,7 +341,7 @@ void doLive(node* thisNode)
       desc->scars[i].cl    = thisNode->scars[i].cl;
       desc->scars[i].backscar = NULL;
 
-      drun(j= (int) thisNode->scars->cl & 3);
+      drun(j= (intptr_t) thisNode->scars->cl & 3);
       drun(cl = GET_CL(thisNode->scars[i].cl));
       drun(deprintf("the cl is %p\n", cl));      
     }

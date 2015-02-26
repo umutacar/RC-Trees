@@ -43,16 +43,8 @@
 #include <malloc.h>
 #include "FreeList.h"
 #include "Data.h"
+#include "GetMacros.h"
 
-// Purify the cluster pointer pointer by setting the low bits of the cluster pointer to zero.
-#define PURIFY(c) (*c = (cluster*) (((unsigned int) (*c)) & 0xFFFFFFFC))
-
-#define GET_CL(c) (cluster *)((int) c & 0xFFFFFFFC)
-#define GET_BC(c) (bin_cluster *)((int) c & 0xFFFFFFFC)
-#define GET_OFF(c) (int) c & 1
-#define GET_CLUSTER_DATA(cl) ((GET_BC(cl))->data[GET_IN(cl)])
-#define GET_OTHER_DATA(cl) ((GET_CL(cl))->data[GET_OT(cl)])
-#define BIN_DATA(bc) (bin_data*)((((int) &(GET_BC(bc))->data))| (GET_OFF(bc))) 
 #define addCluster(a,b,c) addData(&((a)->data),&((b)->data),&((c)->data))
 
 class cluster{

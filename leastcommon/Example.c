@@ -35,8 +35,13 @@ int main()
     for (i=0;i<k;i++) {
       printf("enter a,b,w\n");
       scanf(" %d%d%d",&a,&b,&w);
-      if (a<b) F.link(F.vertex(a+1),F.vertex(b+1),w);
+      if (a<b) {
+      	F.link(F.vertex(a+1),F.vertex(b+1),w);
+      } else {
+      	printf("a > b, skipping\n");
+      }
     }
+	printf("enter k\n");
   }
   F.contract();
   r2=times(&end);
@@ -57,6 +62,7 @@ int main()
       F.link(F.vertex(a+1),F.vertex(b+1),w);
     }
     F.contract(); 
+	printf("enter mode (0 for cut, 1 for link)\n");
   }
   r2=times(&end);
   printf("finished change propagation\n");

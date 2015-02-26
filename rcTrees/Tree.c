@@ -125,7 +125,7 @@ int addEdge(node* v1, node* v2, bin_data data, tree_t* tree)
   scar2 = v2 ->scars + i2;
   scar2->backscar = scar1;
   
-  scar2->cl = (cluster *)((int) (scar1->cl) + 1);
+  scar2->cl = (cluster *)((intptr_t) (scar1->cl) + 1);
 
   deprintf("Added edge from %d to %d ",v1->nId, v2->nId);
   deprintf("EDGE Added on scars %d, and %d \n", i1,i2);

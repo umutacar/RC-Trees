@@ -38,6 +38,8 @@
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_ 1
 
+#include <stdint.h>
+
 #define MAX_DEGREE 8
 #define VALID 1
 #define INVALID 0
@@ -63,7 +65,7 @@
 #define ALLOC_NODE() (node *) allocBlock(currentTree->nodeList)
 #define FREE_NODE(nd)  freeBlock(currentTree->nodeList,(char*) nd)
 
-#define GET_CL(c) (cluster *)((int) c & 0xFFFFFFFC)
+#define GET_CL(c) (cluster *)((intptr_t) c & ~3)
 #define ND_CL(nd) (currentTree->clusterList[nd->nId])
 
 //int* crash; 

@@ -40,6 +40,7 @@
 #include <math.h>
 #include <malloc.h>
 #include <assert.h>
+#include <stdint.h>
 #include "FreeList.h"
 
 #define BUFFER 16
@@ -71,10 +72,10 @@ void allocPage (FreeList* flist)
   flist->pages = (char *)ptr; 
 
   ptr = (char **) ((char*) ptr + bsize);
-  offset = (int) ptr % bsize;
+  offset = (int) ((intptr_t)ptr % bsize);
   if(offset > bsize-4)
     offset -= bsize;
-  ptr = (char **) (((int) ptr) - offset);
+  ptr = (char **) (((char*) ptr) - offset);
  
   // Add the remaining blocks to the free list. 
   flist->head = (char*) ptr; 
@@ -106,10 +107,10 @@ void allocPageN (FreeList* flist, int nBlocks)
   flist->pages = (char *)ptr; 
   ptr = (char **) ((char*) ptr + bsize);
   
-  offset = (int) ptr % bsize;
+  offset = (int) ((intptr_t)ptr % bsize);
   if(offset > bsize-4)
     offset -= bsize;
-  ptr = (char **) (((int) ptr) - offset);
+  ptr = (char **) (((char*) ptr) - offset);
  
 
 
@@ -168,7 +169,7 @@ void* allocBlock(FreeList *flist)
 
   deprintf("allocBlock %p\n",flist);
   deprintf("node is %p\n",node);
-  flist->head = (char *) (*((int *)flist->head));
+  flist->head = (char *) (*((intptr_t *)flist->head));
   deprintf("flist->head is %p\n",flist->head);
 
   if (!(flist->head)) {
