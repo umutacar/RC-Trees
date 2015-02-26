@@ -5,7 +5,7 @@
 ######################################################################
 
 CC = g++
-OPTFLAGS = -O4 -finline-functions 
+OPTFLAGS = -O4 -finline-functions -fpermissive
 COPTIONS = -Wno-deprecated
 RCFLAGS = -DNDEBUG -DNVERBOSE 
 LDOPTIONS = 
