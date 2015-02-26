@@ -94,7 +94,8 @@ node* copyVertex (node* n, FreeList* flist)
   newVertex->vertex = n->vertex;
   for(i=0;i<MAX_DEGREE; i++)
     {
-      newVertex->scars[i].backscar = NULL;      
+      newVertex->scars[i].backscar = NULL;
+      newVertex->scars[i].parent = newVertex;
     }
  
   return newVertex; 
@@ -139,12 +140,13 @@ void initVertex(node* v, unary_data data, int id, void* tr)
   v->right   = -1;
 
   
-  //v->descendant = NULL;
+  v->descendant = NULL;
   for(i=0;i<MAX_DEGREE;i++)
     {
       deprintf("i is %d\n",i);   
       v->scars[i].backscar = NULL;
       v->scars[i].cl       = NULL;
+      v->scars[i].parent   = v;
     }
 }
 
@@ -197,11 +199,16 @@ int verifyVertex (node* v)
   int i, degree=0; 
   node* u; 
   for (i = 0; i < MAX_DEGREE; ++i) {
+	  if (v != v->scars[i].parent) {
+		  deprintf("scar->parent doesn't work");
+		  drun(CRASH);
+		  return 0;
+	  }
     if ((u = GET_NEIGHBOR(v->scars[i].backscar))) {
       ++degree;
       if (GET_NEIGHBOR(v->scars[i].backscar->backscar) != v) {
-        printf ("verifyVertex: Error, inconsistent edge=(v=%d, u=%d)",v->nId,u->nId );
-	drun(CRASH);
+        deprintf("verifyVertex: Error, inconsistent edge=(v=%d, u=%d)",v->nId,u->nId );
+        drun(CRASH);
         return 0; 
       } 
     }

@@ -48,13 +48,13 @@
 #include "UnaryCluster.h"
 #include "ClusterList.h"
 
-
-#define GET_NEIGHBOR(ptr) ((node *) ((int)(ptr) - ((int)(ptr) % sizeof(node))))
+#define GET_NEIGHBOR(ptr) ((ptr) ? (ptr)->parent : NULL)
 
 typedef struct scar { 
   //struct node* neighbor;
   cluster* cl;
   struct scar* backscar;
+  struct node *parent;
 } scar;
 
 typedef struct node { 

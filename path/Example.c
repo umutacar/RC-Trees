@@ -49,36 +49,40 @@
 
 int main()
 {
-  RC_Forest F(100);
-
-  //now just link consecutive vertices in a chain
-  int i;
-  for(i=1;i<=99;i++)
-    {
-      if(i == 50)
-	F.link(F.vertex(i), F.vertex(i+1),2);
-      else
-	F.link(F.vertex(i), F.vertex(i+1),1);
-      printf("linking %d to %d\n",i,i+1);
-    }
-  //link them in batch
-  F.contract();
-
-  node* u = F.vertex(20);
-  node* v = F.vertex(80);
-
-  //find the largest edge between u and v on the path
-  bin_data dat = pathQuery(u,v);
-  printf("The largest edge in the path from 20 to 80 is ");
-  dat.print();
-  //now unlink 49-50 and link 1-100
-  F.cut(F.vertex(49),F.vertex(50));
-  F.link(F.vertex(1),F.vertex(100),4);
-  printf(" unlink 49-50 and link 1-100\n");
-  F.contract();
-
-  dat = pathQuery(u,v);
-  printf("The largest edge in the path from 20 to 80 is ");
-  dat.print();
+	int experiment;
+	for (experiment = 0; experiment <= 1; ++experiment) {
+		int i;
+		int n = 50000;
+		int t0 = time(0);
+		RC_Forest F(2*n);
+		debug = 0;
+		for(i=1;i<= 2*n-1 ;i++)
+		{
+			if(i == n)
+				continue;
+			else
+				F.link(F.vertex(i), F.vertex(i+1),1);
+		}
+		printf("Before the first contract\n");
+  	  	F.contract();
+  	    printf("Initial links done\n");
+		for(i=1;i<=n;i++)
+		{
+			int isFirstHalf = i <= n / 2;
+			int source = experiment ? 1 : isFirstHalf ? i * 2 : i * 2 - n - 1;
+			int target = n + source;
+			if (source > n || source < 1) {
+				printf("fail (i = %d source = %d)\n", i, source);
+				fflush(stdout);
+			}
+			F.link(F.vertex(source), F.vertex(target),2);
+			F.contract();
+			bin_data dat = pathQuery(F.vertex(source), F.vertex(target));
+			F.cut(F.vertex(source),F.vertex(target));
+			F.contract();
+		}
+		printf("finish link and cut\n");
+		printf("experiment %d ended in %ld seconds\n", experiment, time(0) - t0);
+	}
 }
 

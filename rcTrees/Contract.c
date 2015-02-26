@@ -108,8 +108,7 @@ node* removeQueue (Queue *q)
   node* nd; 
   deprintf("removeQueue: Queue = %p \n",q);
   nd = (node *) dequeue(q);
-
-  assert (nd); 
+  assert (nd);
   nd -> mark = NOT_QUEUED;
   return nd; 
 }
@@ -418,7 +417,6 @@ void runNode(node* thisNode, Queue* q)
     lindex = thisNode->left;
     lscar = thisNode->scars[lindex].backscar;
     left  = GET_NEIGHBOR(lscar);
-
     doRake(thisNode,left,lindex);
     insertQueue(left->descendant,q);
     deleteNode(thisNode);

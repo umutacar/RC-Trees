@@ -25,9 +25,12 @@ int main()
   int i,k,n,a,b,w;
   struct tms start,end;
   clock_t r1,r2;
+  printf("instert n\n");
   scanf(" %d",&n);
   r1=times(&start);
+  printf("start initial run\n");
   RC_Forest F(n);
+  printf("instert k\n");
   while (scanf(" %d",&k),k>=0) {
     for (i=0;i<k;i++) {
       scanf(" %d%d%d",&a,&b,&w);
@@ -41,11 +44,14 @@ int main()
   printf("real time: %.3lfs\n",((double)r2-r1)/HZ);
   r1=times(&start);
   int mode;
+  printf("instert mode\n");
   while (scanf(" %d",&mode)!=EOF) {
     if (mode==0) {
+      printf("instert a,b\n");
       scanf(" %d%d",&a,&b);
       F.cut(F.vertex(a+1),F.vertex(b+1));
     } else {
+      printf("instert a,b,w\n");
       scanf(" %d%d%d",&a,&b,&w);
       F.link(F.vertex(a+1),F.vertex(b+1),w);
     }

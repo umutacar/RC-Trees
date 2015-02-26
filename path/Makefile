@@ -16,6 +16,8 @@ LD = $(CC) $(LIBS) $(LDOPTIONS)
 
 APOBJS = Data.o Application.o
 
+all: default
+
 default:  Example
 .c.o: 
 	$(CC) $(CFLAGS) $(RCFLAGS) -c  $*.c

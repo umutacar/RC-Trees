@@ -56,7 +56,7 @@ int bcs=0;
 /* Verify the entire tree */
 int verifyTree (tree_t* tree) 
 {  
-  int i; 
+  int i;
   deprintf("Tree->n is %d\n",tree->n);
 
   for (i = 0; i < tree->n; ++i) {
@@ -157,7 +157,6 @@ int deleteEdge(node* n1, node* n2, tree_t* tree)
     return 0;
   }
   
-
   cluster* cl = GET_CL(n1->scars[s1].cl);
   cl->affected = DELETED;
   if(!PUSHDOWN)
@@ -466,9 +465,7 @@ tree_t* loadtree_param_vertex(char* treeFile,
     addEdge (vertexArray+v1,vertexArray+v2,bdat,tree); 
   }
 
- 
-
-  assert (verifyTree(tree)); 
+  assert (verifyTree(tree));
  
   return tree; 
 }

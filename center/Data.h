@@ -42,7 +42,7 @@
 #define _DATA_H_ 1
 
 #include "Globals.h"
-#include <iostream.h>
+#include <iostream>
 
 #define GET_DT(c) (bin_data *)((int) c & 0xFFFFFFFC)
 #define GET_IN(c) (int) c & 1
