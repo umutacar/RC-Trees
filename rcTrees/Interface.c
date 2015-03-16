@@ -124,7 +124,7 @@ void RC_Forest::cut(node* v1, node* v2)
 // return true (1) if there is an edge between veritices of id n1
 // and n2 in the cached tree, otherwise, false (0)
 ///////////////////////////////////////////////////////////////////
-int isEdge(node* v1, node* v2) 
+int RC_Forest::isEdge(node* v1, node* v2) 
 {
   int i;
   for(i=0;i<MAX_DEGREE;i++)
