@@ -221,6 +221,7 @@ void destructTree (tree_t* tree)
   destructFreeList (tree->UClusters); 
   destructFreeList (tree->vertexList); 
   destructFreeList (tree->nodeList);
+
   free(tree); 
 }
 

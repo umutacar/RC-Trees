@@ -50,9 +50,10 @@
 int main()
 {
 	int experiment;
+        for (int times = 0; times < 10; ++times) {
 	for (experiment = 0; experiment <= 1; ++experiment) {
 		int i;
-		int n = 50000;
+		int n = 5000;
 		int t0 = time(0);
 		RC_Forest F(2*n);
 		debug = 0;
@@ -84,5 +85,6 @@ int main()
 		printf("finish link and cut\n");
 		printf("experiment %d ended in %ld seconds\n", experiment, time(0) - t0);
 	}
+}
 }
 

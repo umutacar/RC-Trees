@@ -209,6 +209,7 @@ void destructFreeList (FreeList *flist)
     free(tmp); 
     nMalloc--;
   }
+  free(flist);
 }
 
 ////////////////////////////////////////////////////////////////

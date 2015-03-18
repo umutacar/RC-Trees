@@ -47,7 +47,9 @@ FreeList* theList;
 ///////////////////////////////////////////////////////////////////////////
 void initClusterList()
 {
-  theList = initFreeList(sizeof(clusterNode));
+  if (theList == NULL) {
+    theList = initFreeList(sizeof(clusterNode));
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -56,6 +58,13 @@ void initClusterList()
 clusterList::clusterList()
 {
   head = NULL;
+}
+
+clusterList::~clusterList()
+{
+  while (head != NULL) {
+    removeCluster(this);
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////

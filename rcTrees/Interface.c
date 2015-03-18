@@ -55,6 +55,11 @@ RC_Forest::RC_Forest(int n) {
   initTreeContraction(cQueue,cTree);
 }
 
+RC_Forest::~RC_Forest() {
+  destructTree(cTree);
+  destructQueue(cQueue);
+}
+
 //////////////////////////////////////////////////////////////////////
 // Structural Changes: link and cut
 //////////////////////////////////////////////////////////////////////

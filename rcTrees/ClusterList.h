@@ -52,6 +52,7 @@ typedef struct clusterNode{
 class clusterList{
  public:
   clusterList();
+  ~clusterList();
   clusterNode* head;
 };
 
