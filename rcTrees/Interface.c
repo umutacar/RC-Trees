@@ -150,7 +150,7 @@ void RC_Forest::changeVertexData (node* v, void (*f)(unary_data* ))
   unary_cluster* ucl = (unary_cluster*) v->data;
   (*f)(&(ucl->data)); 
   deprintf("changing data on %d\n",v->nId);
-  deprintf("inserting into pq %p\n",affectedClusters);
+//  deprintf("inserting into pq %p\n",affectedClusters);
   insertCluster(v->data,&affectedClusters);
 }
 
@@ -160,7 +160,7 @@ void RC_Forest::changeEdgeData (node* v, node* u, void (*f)(bin_data*))
   deprintf("changing edge from %d to %d \n",v->nId, u->nId);
   assert (c); 
   (*f)(&(c->data)); 
-  deprintf("inserting into pq %p\n",affectedClusters);
+//  deprintf("inserting into pq %p\n",affectedClusters);
   insertCluster(c,&affectedClusters);
 
 }
