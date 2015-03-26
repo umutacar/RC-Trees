@@ -18,7 +18,7 @@ APOBJS = Data.o Application.o
 
 all: default
 
-default:  Example
+default: clean Example
 .c.o: 
 	$(CC) $(CFLAGS) $(RCFLAGS) -c  $*.c
 

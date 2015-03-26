@@ -50,7 +50,6 @@
 int main()
 {
 	int experiment;
-        for (int times = 0; times < 10; ++times) {
 	for (experiment = 0; experiment <= 1; ++experiment) {
 		int i;
 		int n = 5000;
@@ -86,5 +85,3 @@ int main()
 		printf("experiment %d ended in %ld seconds\n", experiment, time(0) - t0);
 	}
 }
-}
-
