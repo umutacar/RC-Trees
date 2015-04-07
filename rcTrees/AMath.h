@@ -28,30 +28,24 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
+////////////////////////////////////////////////////////////////////////////
+// AMath.h
 //
-// Jorge L. Vittes
-//
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
+// Jorge Vittes
+// 
+// Additional Mathematical Functions
+////////////////////////////////////////////////////////////////////////////
+#ifndef _AMATH_H_
+#define _AMATH_H_ 1
 
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
-#include "BinCluster.h"
-#include "UnaryCluster.h"
-#include "FinalCluster.h"
-#include "Vertex.h"
-#include "Data.h"
-
-void updateWeight(bin_cluster* cl);
-
-bin_data pathQuery(node* v, node* u);
-
-cluster* root(node* v);
-
-
+double dmin(double a, double b);
+double min3(double a, double b, double c);
+double dmax(double a, double b);
+int imax(int a, int b);
+double max3(double a, double b, double c);
+ 
 #endif

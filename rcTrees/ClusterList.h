@@ -28,30 +28,36 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
+//////////////////////////////////////////////////////////////////////////
+// ClusterList.h
 //
-// Jorge L. Vittes
+// Jorge Vittes
 //
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
+// A structure to store a list of clusters for returning after contraction
+///////////////////////////////////////////////////////////////////////////
 
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
-
+#include "Globals.h"
+#include "Data.h"
 #include "BinCluster.h"
 #include "UnaryCluster.h"
-#include "FinalCluster.h"
-#include "Vertex.h"
-#include "Data.h"
 
-void updateWeight(bin_cluster* cl);
+#ifndef _CLUSTER_LIST_H_
+#define _CLUSTER_LIST_H_ 1
 
-bin_data pathQuery(node* v, node* u);
+typedef struct clusterNode{
+  cluster* cl;
+  struct clusterNode *next;
+}clusterNode;
 
-cluster* root(node* v);
+class clusterList{
+ public:
+  clusterList();
+  ~clusterList();
+  clusterNode* head;
+};
 
+void initClusterList();
+void insertCluster(cluster* cl, clusterList* list);
+cluster* removeCluster(clusterList* list);
 
 #endif

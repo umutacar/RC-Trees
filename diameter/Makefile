@@ -6,7 +6,7 @@
 
 CC = g++
 OPTFLAGS = -O4 -finline-functions 
-COPTIONS = -Wno-deprecated
+COPTIONS = -Wno-deprecated -Wno-unused-result
 RCFLAGS = -DNDEBUG -DNVERBOSE 
 LDOPTIONS = 
 INCLUDES = -I. -I../rcTrees

@@ -41,12 +41,8 @@
 #define _DATA_H_ 1
 
 #include "Globals.h"
+#include "GetMacros.h"
 #include <stdio.h>
-#define GET_DT(c) (bin_data *)((int) c & 0xFFFFFFFC)
-#define GET_IN(c) (int) c & 1
-#define GET_OT(c) ~((int)c & 1) & 1
-#define THIS_DATA(d) ((GET_DT(d))->data + (GET_IN(d)))
-#define OTHER_DATA(d) ((GET_DT(d))->data + (GET_OT(d)))
 
 typedef struct data_t{
   double weight;

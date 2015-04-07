@@ -28,30 +28,36 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
+//////////////////////////////////////////////////////////////////////
+// FreeList.h
 //
-// Jorge L. Vittes
-//
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
+// Jorge L. Vittes and Umut A. Acar
+// Description: Interface for a free list of fixed size blocks
+//////////////////////////////////////////////////////////////////////
 
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
+#ifndef _FREE_LIST_H_
+#define _FREE_LIST_H_ 1
+#include "Globals.h"
 
-#include "BinCluster.h"
-#include "UnaryCluster.h"
-#include "FinalCluster.h"
-#include "Vertex.h"
-#include "Data.h"
+typedef struct {
+  int nAlloc;    // number of allocated  nodes
+  int size;      // block size in bytes 
 
-void updateWeight(bin_cluster* cl);
+  char* head;      // head of the free list
+  char* last_malloc;  // the address of the last malloc
+  char* pages;     // list of all allocated pages
+} FreeList;
 
-bin_data pathQuery(node* v, node* u);
+FreeList* initFreeList(int bsize) ;
+FreeList* initPreAllocatedFreeList(int nblocks, int bsize) ;
 
-cluster* root(node* v);
+void* allocBlock(FreeList *flist);
+
+void freeBlock (FreeList *flist, char* block);
+void destructFreeList (FreeList *flist); 
+
+void dumpFreeList (FreeList *flist);
+void printMemUsage(FreeList *flist);
 
 
 #endif

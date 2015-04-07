@@ -28,30 +28,52 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
-//
-// Jorge L. Vittes
-//
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
 
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
+///////////////////////////////////////////////////////////////////////////
+// Interface.c
+// 
+// Jorge Luis Vittes
+//
+// Convinient interfacing functions for RC-Trees
+///////////////////////////////////////////////////////////////////////////
+#ifndef _INTERFACE_H_
+#define _INTERFACE_H_ 1
 
+#include <time.h>
 #include "BinCluster.h"
 #include "UnaryCluster.h"
-#include "FinalCluster.h"
-#include "Vertex.h"
 #include "Data.h"
+#include "Vertex.h"
+#include "Tree.h"
+#include "Queue.h"
 
-void updateWeight(bin_cluster* cl);
+class RC_Forest {
+ private:
+  Queue *cQueue;
+  tree_t* cTree;
+  clusterList affectedClusters;
 
-bin_data pathQuery(node* v, node* u);
+ public:
 
-cluster* root(node* v);
+  node* vertex(int n) {return cTree->vertexArray+n;}
 
+  int link(node* thisNode, node* otherNode, int w);
+
+  void cut(node* v1, node* v2);
+
+  int isEdge(node* v1, node* v2);
+
+  RC_Forest(int n);
+
+  ~RC_Forest();
+
+  void contract();
+
+  void changeVertexData (node* v, void (*f)(unary_data* ));
+
+  void changeEdgeData (node* v, node* u, void (*f)(bin_data*));
+
+  cluster* propagate();
+};
 
 #endif

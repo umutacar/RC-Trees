@@ -5,18 +5,20 @@
 ######################################################################
 
 CC = g++
-OPTFLAGS = -O4 -finline-functions 
-COPTIONS = -Wno-deprecated
+OPTFLAGS = -O4 -finline-functions
+COPTIONS = -Wno-deprecated -Wno-unused-result
 RCFLAGS = -DNDEBUG -DNVERBOSE 
 LDOPTIONS = 
-INCLUDES = -I. -I../rcTrees #-g
+INCLUDES = -I. -I../rcTrees
 CFLAGS = $(COPTIONS) $(OPTFLAGS) $(INCLUDES)
 LIBS = -L.
 LD = $(CC) $(LIBS) $(LDOPTIONS) 
 
 APOBJS = Data.o Application.o
 
-default:  Example
+all: default
+
+default: clean Example
 .c.o: 
 	$(CC) $(CFLAGS) $(RCFLAGS) -c  $*.c
 

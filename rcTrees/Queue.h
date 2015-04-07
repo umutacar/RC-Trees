@@ -28,30 +28,37 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
+///////////////////////////////////////////////////////////////////////
+// queue.h
 //
-// Jorge L. Vittes
+// Jorge Vittes, Umut Acar
 //
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
+// Code for dealing with a simple queue
+//
+////////////////////////////////////////////////////////////////////////
 
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
+#ifndef _QUEUE_H_
+#define _QUEUE_H_ 1
 
-#include "BinCluster.h"
-#include "UnaryCluster.h"
-#include "FinalCluster.h"
-#include "Vertex.h"
-#include "Data.h"
+#include "FreeList.h"
 
-void updateWeight(bin_cluster* cl);
+typedef struct QNode {
+  void* data;
+  struct QNode* next;
+} QNode;
 
-bin_data pathQuery(node* v, node* u);
+typedef struct Queue {
+  QNode* front;
+  QNode* back;
+  FreeList* flist;
+} Queue;
 
-cluster* root(node* v);
 
-
+//the total number ever placed in the queue.
+extern int totalqueued;
+Queue* initQueue();
+void destructQueue(Queue* q);
+void   enqueue(Queue* q, void* n);
+void*  dequeue(Queue* q);
+int    isEmpty(Queue* q);
 #endif

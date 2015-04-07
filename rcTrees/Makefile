@@ -14,19 +14,13 @@ CFLAGS = $(COPTIONS) $(OPTFLAGS) $(INCLUDES)
 LIBS = -L.
 LD = $(CC) $(LIBS) $(LDOPTIONS) 
 
-APOBJS = Data.o Application.o
+RCOBJS = AMath.o Debug.o FreeList.o Contract.o BinCluster.o UnaryCluster.o FinalCluster.o Interface.o  Queue.o Tree.o Vertex.o ClusterList.o 
 
-default:  Example
-.c.o: 
-	$(CC) $(CFLAGS) $(RCFLAGS) -c $*.c
+%.o: 
+	$(CC) $(CFLAGS) $(RCFLAGS) -c ../rcTrees/$(subst .o,.c,$@)
 
-libRCTrees: $(APOBJS) 
-	make rcobjs -f ../rcTrees/Makefile -C.   # generates libRCTrees.a
-	ar r libRCTrees.a $(APOBJS)      # insert the application files
-
-Example : Example.o libRCTrees
-	$(LD) -o Example Example.o -lRCTrees
+rcobjs : $(RCOBJS)
+	ar rc libRCTrees.a $(RCOBJS) 
 
 clean:
-	rm -f *.o *.a Example
-
+	rm -f *.o libRCTrees.a

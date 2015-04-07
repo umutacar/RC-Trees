@@ -41,12 +41,8 @@
 #define _DATAOPS_H_ 1
 
 #include "Globals.h"
+#include "GetMacros.h"
 #include <stdio.h>
-/* the data type for the scars and the nodes */
-#define GET_DT(c) (bin_data *)((int) c & 0xFFFFFFFC)
-#define GET_IN(c) (int) c & 1
-#define GET_OT(c) ~((int)c & 1) & 1
-
 
 class bin_data{
  public:

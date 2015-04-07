@@ -28,30 +28,6 @@
 // the rights to redistribute these changes.
 ///////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////
-// Application.h
-//
-// Jorge L. Vittes
-//
-// This code is for finding the maximum edged between two
-// vertices
-// Algorithm by Guy Blelloch, and Jorge Vittes
-///////////////////////////////////////////////////////////////
-
-#ifndef _APPLICATION_H_
-#define _APPLICATION_H_ 1 
-
-#include "BinCluster.h"
 #include "UnaryCluster.h"
+#include "BinCluster.h"
 #include "FinalCluster.h"
-#include "Vertex.h"
-#include "Data.h"
-
-void updateWeight(bin_cluster* cl);
-
-bin_data pathQuery(node* v, node* u);
-
-cluster* root(node* v);
-
-
-#endif

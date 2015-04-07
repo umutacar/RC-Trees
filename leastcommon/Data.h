@@ -41,19 +41,12 @@
 #define _DATA_H_ 1
 
 #include "Globals.h"
+#include "GetMacros.h"
 #include <stdio.h>
 #include <stdint.h>
 
-#define GET_DT(c) (bin_data *)((intptr_t) c & 0xFFFFFFFFFFFFFFFCL)
-#define GET_IN(c) (intptr_t) c & 1L
-#define GET_OT(c) ~((intptr_t)c & 1L) & 1L
-#define THIS_DATA(d) ((GET_DT(d))->data + (GET_IN(d)))
-#define OTHER_DATA(d) ((GET_DT(d))->data + (GET_OT(d)))
-//#define EMPTY_DATA ((data_t) {0.0,0.0})
 #define EMPTY_UDATA ((unary_data){0})
 #define EMPTY_BDATA ((bin_data){0})
-
-
 
 class bin_data{
  public:
